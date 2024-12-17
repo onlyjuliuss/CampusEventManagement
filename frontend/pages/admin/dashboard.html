@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Campus Event Hub</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/calendar.css">
+</head>
+<body>
+    <script>
+        // Check if user is admin
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.isAdmin) {
+            window.location.href = '../login.html';
+        }
+    </script>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="../../index.html" style="color: white; text-decoration: none;">Campus Event Hub</a>
+        </div>
+        <div class="nav-menu">
+            <a href="#" class="nav-link active" data-view="events">Events</a>
+            <a href="calendar.html" class="nav-link">Calendar</a>
+            <a href="#" class="nav-link" data-view="profile">Profile</a>
+            <button onclick="window.location.href='create-event.html'" class="btn-primary">Create Event</button>
+        </div>
+        <div class="nav-links">
+            <span id="userWelcome"></span>
+            <button onclick="handleLogout()" class="btn-danger">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Events Management -->
+        <div id="eventsView" class="view-section">
+            <h2>Event Management</h2>
+            <div class="events-filter">
+                <label>Filter by type:</label>
+                <select id="eventTypeFilter">
+                    <option value="">All Events</option>
+                    <option value="workshop">Workshops</option>
+                    <option value="seminar">Seminars</option>
+                    <option value="club_activity">Club Activities</option>
+                </select>
+            </div>
+            <div id="eventsList" class="events-grid"></div>
+        </div>
+
+        <!-- Calendar View -->
+        <div id="calendarView" class="view-section" style="display: none;">
+            <div class="container">
+                <div id="calendar" class="calendar-container">
+                    <!-- Calendar will be populated by calendar.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Profile -->
+        <div id="profileView" class="view-section" style="display: none;">
+            <h2>Admin Profile</h2>
+            <div class="profile-info">
+                <h3 id="profileUsername"></h3>
+                <p id="profileEmail"></p>
+            </div>
+            <div class="admin-stats">
+                <h3>Events Overview</h3>
+                <div id="eventsStats" class="stats-grid">
+                    <!-- Stats will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogout() {
+            localStorage.removeItem('user');
+            window.location.href = '../../index.html';
+        }
+    </script>
+    <script src="../../assets/js/admin-dashboard.js"></script>
+    <script src="../../assets/js/calendar.js"></script>
+</body>
+</html> 

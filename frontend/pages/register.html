@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Campus Event Hub</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="../index.html">Campus Event Hub</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="auth-container">
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Join Campus Event Hub today</p>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required class="form-control">
+                </div>
+                <button type="submit" class="btn-primary">Register</button>
+                <div id="errorMessage" class="error-message"></div>
+            </form>
+            <p class="auth-footer">Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </div>
+
+    <script src="../assets/js/config.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const preferences = ['workshop', 'seminar', 'club_activity']
+                .filter(pref => document.getElementById(pref).checked);
+
+            try {
+                console.log('Registering user:', { username, email });
+                const response = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username,
+                        email,
+                        password,
+                        preferences
+                    })
+                });
+
+                const data = await response.json();
+                console.log('Registration response:', data);
+
+                if (response.ok) {
+                    console.log('Storing user data:', data);
+                    localStorage.setItem('user', JSON.stringify(data));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert(data.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('An error occurred during registration');
+            }
+        });
+    </script>
+</body>
+</html> 

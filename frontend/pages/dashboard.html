@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Campus Event Hub</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="../index.html" style="color: white; text-decoration: none;">Campus Event Hub</a>
+        </div>
+        <div class="nav-menu">
+            <a href="#" class="nav-link active" data-view="events">Events</a>
+            <a href="#" class="nav-link" data-view="calendar">Calendar</a>
+            <a href="#" class="nav-link" data-view="profile">Profile</a>
+            <div id="adminControls" style="display: none;">
+                <button onclick="window.location.href='create-event.html'" class="btn-primary">Create Event</button>
+            </div>
+        </div>
+        <div class="nav-links">
+            <span id="userWelcome"></span>
+            <button onclick="handleLogout()" class="btn-danger">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Events View -->
+        <div id="eventsView" class="view-section">
+            <h2>Events</h2>
+            <div class="events-filter">
+                <label>Filter by type:</label>
+                <select id="eventTypeFilter">
+                    <option value="">All Events</option>
+                    <option value="workshop">Workshops</option>
+                    <option value="seminar">Seminars</option>
+                    <option value="club_activity">Club Activities</option>
+                </select>
+            </div>
+            <div id="eventsList" class="events-grid"></div>
+        </div>
+
+        <!-- Calendar View -->
+        <div id="calendarView" class="view-section" style="display: none;">
+            <h2>Event Calendar</h2>
+            <div id="calendar"></div>
+        </div>
+
+        <!-- Profile View -->
+        <div id="profileView" class="view-section" style="display: none;">
+            <h2>My Profile</h2>
+            <div class="profile-info">
+                <h3 id="profileUsername"></h3>
+                <p id="profileEmail"></p>
+            </div>
+            <div class="my-events">
+                <h3>My Registered Events</h3>
+                <div id="registeredEventsList" class="events-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script>
+        // Check if user is logged in
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+
+        // Show admin controls if user is admin
+        if (user.isAdmin) {
+            document.getElementById('adminControls').style.display = 'inline-block';
+        }
+
+        // Set welcome message
+        document.getElementById('userWelcome').textContent = `Welcome, ${user.username}!`;
+
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const view = this.dataset.view;
+                showView(view);
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        function showView(viewName) {
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.style.display = 'none';
+            });
+            document.getElementById(`${viewName}View`).style.display = 'block';
+
+            if (viewName === 'calendar') {
+                initializeCalendar();
+            } else if (viewName === 'profile') {
+                loadProfile();
+            } else {
+                loadEvents();
+            }
+        }
+
+        // Initialize calendar
+        function initializeCalendar() {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: async function(info, successCallback, failureCallback) {
+                    try {
+                        const response = await fetch('http://localhost:5000/api/events', {
+                            headers: {
+                                'Authorization': `Bearer ${user.token}`
+                            }
+                        });
+                        const events = await response.json();
+                        const calendarEvents = events.map(event => ({
+                            title: event.title,
+                            start: `${event.date}T${event.time}`,
+                            description: event.description,
+                            location: event.location
+                        }));
+                        successCallback(calendarEvents);
+                    } catch (error) {
+                        failureCallback(error);
+                    }
+                }
+            });
+            calendar.render();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Load initial view
+        showView('events');
+    </script>
+    <script src="../assets/js/dashboard.js"></script>
+</body>
+</html> 

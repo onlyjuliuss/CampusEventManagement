@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - Campus Event Hub</title>
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css' rel='stylesheet' />
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="../../index.html" style="color: white; text-decoration: none;">Campus Event Hub</a>
+        </div>
+        <div class="nav-menu">
+            <a href="dashboard.html" class="nav-link">Events</a>
+            <a href="#" class="nav-link active">Calendar</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <button onclick="window.location.href='create-event.html'" class="btn-primary">Create Event</button>
+        </div>
+        <div class="nav-links">
+            <span id="userWelcome"></span>
+            <button onclick="handleLogout()" class="btn-danger">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="calendar"></div>
+    </div>
+
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.js'></script>
+    <script>
+        // Check if user is admin
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.isAdmin) {
+            window.location.href = '../login.html';
+        }
+
+        document.getElementById('userWelcome').textContent = `Welcome, ${user.username}!`;
+
+        function handleLogout() {
+            localStorage.removeItem('user');
+            window.location.href = '../../index.html';
+        }
+
+        // Initialize calendar
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: function(info, successCallback, failureCallback) {
+                    // Fetch events from your API
+                    fetch('http://localhost:5000/api/events', {
+                        headers: {
+                            'Authorization': `Bearer ${user.token}`
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(events => {
+                        const calendarEvents = events.map(event => ({
+                            title: event.title,
+                            start: event.date,
+                            description: event.description,
+                            location: event.location,
+                            extendedProps: {
+                                capacity: event.capacity,
+                                registeredUsers: event.registeredUsers.length
+                            }
+                        }));
+                        successCallback(calendarEvents);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching events:', error);
+                        failureCallback(error);
+                    });
+                },
+                eventClick: function(info) {
+                    alert(`
+                        Event: ${info.event.title}
+                        Date: ${info.event.start.toLocaleDateString()}
+                        Location: ${info.event.extendedProps.location}
+                        Capacity: ${info.event.extendedProps.registeredUsers}/${info.event.extendedProps.capacity}
+                    `);
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+</html> 
