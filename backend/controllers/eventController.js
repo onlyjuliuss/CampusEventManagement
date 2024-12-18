@@ -54,7 +54,7 @@ export const createEvent = async (req, res) => {
             location,
             capacity: parseInt(capacity),
             eventType,
-            image: req.file ? `/assets/uploads/${req.file.filename}` : '/assets/images/default-event.jpg',
+            // image: req.file ? `/assets/uploads/${req.file.filename}` : '/assets/images/default-event.jpg',
             creator: req.user._id,
             registeredUsers: []
         });
