@@ -5,7 +5,7 @@ RSvip Hub is a campus event web application where students and lecturers can vie
 
 
 Deployment Link  
-[**Live Demo on Vercel**](https://your-deployment-link.vercel.app)  
+[**Live Demo on Vercel**]([https://your-deployment-link.vercel.app](https://campuseventmanagement-frontend.onrender.com))  
 
 
 Login Details  
@@ -16,8 +16,8 @@ Admin Login
 - Password: `admin123`  
 
 User Login  
-- Email: `unknown@`  
-- Password: `sela123`  
+- Email: `unknown@gmail.com`  
+- Password: `123456`  
 
 
 |  Features                                  |      Status         |
@@ -71,27 +71,50 @@ The following endpoints were tested using Postman.
 1. User Authentication  
    - POST `/api/auth/login`  
    - Payload: `{ "email": "admin@example.com", "password": "admind123" }`  
-   - Response: `{ "token": "yourJWTtoken" }`
+   - Response: `{ "token": "user created successfully" }`
 
 2. RSVP Event  
-   - POST `/api/events/rsvp/:id`  
-   - Headers: `Authorization: Bearer <token>`  
-   - Response: `{ "message": "RSVP successful", "availableSeats": 29 }`
+   - GET   
+   - Response: 
+   - [
+	{
+		"_id": "67609cbef711b7145ab7d8c1",
+		"title": "Campus vibes",
+		"description": "Chill guys",
+		"date": "2024-12-16",
+		"time": "23:30",
+		"location": "Rec-Center",
+		"capacity": 50,
+		"eventType": "club_activity",
+		"image": "/assets/uploads/1734384830155.jpeg",
+		"creator": {
+			"_id": "675eda34514a1985d6c0a654",
+			"username": "admin"
+		},
+		"registeredUsers": [
+			"676061c78677b1ef73c16d0d"
+		],
+		"createdAt": "2024-12-16T21:33:50.172Z",
+		"updatedAt": "2024-12-18T20:01:07.692Z",
+		"__v": 3
+	},
+
 
 3. Create Event (Admin Only) 
    - POST: `/api/events`  
-   - Payload: `{ "name": "Workshop", "date": "2024-12-20", "location": "Hall A", "capacity": 50 }`  
-   - Headers: `Authorization: Bearer <adminToken>`  
+   - Payload: `{ "name": "forum", "date": "2024-12-218", "location": "Kwapong Hall", "capacity": 30 }`  
+   - Headers: `Authorization: Bearer <successful>`  
 
 ![Insomnia Screenshot]
-![Screenshot 2024-12-14 104754](https://github.com/user-attachments/assets/7ed0ec0a-0766-458f-af4b-9a33cfa28e5e)
-![Screenshot 2024-12-14 224707](https://github.com/user-attachments/assets/df7cc149-5105-4b77-8a3e-5e14b4908607)
-![Screenshot 2024-12-14 224749](https://github.com/user-attachments/assets/0724b867-d82c-44ce-b14c-d9dbe3e0ab81)
+![Screenshot 2024-12-14 104754](![Screenshot 2024-12-14 224707](https://github.com/user-attachments/assets/21b77811-db35-4fbb-a4ce-b8fe0bd5676f)
+![Screenshot 2024-12-14 224707](![Screenshot 2024-12-14 224749](https://github.com/user-attachments/assets/de78e415-9aa7-4d84-8eb3-706f1cadaf40)
+![Screenshot 2024-12-14 224749](![Screenshot 2024-12-14 104754](https://github.com/user-attachments/assets/daa47fe7-8e1c-42c0-b8af-883d84decbde)
+
 
 
 Technologies Used
-- Frontend: React, React Router, CSS  
-- Backend**: Node.js, Express.js, MongoDB (for managing events and RSVPs)  
+- Frontend: Html, CSS  
+- Backend: Node.js, MongoDB (for managing events and RSVPs)  
 - Deployment: Render (Backend), (Frontend)
 
 Deployment Requirements  
