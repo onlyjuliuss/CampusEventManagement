@@ -80,7 +80,7 @@
                     const eventCard = document.createElement('div');
                     eventCard.className = 'event-card';
                     const imageUrl = event.image.startsWith('/') 
-                        ? `http://localhost:5000${event.image}`
+                        ? `https://campuseventmanagement-backend.onrender.com${event.image}`
                         : event.image;
 
                     eventCard.innerHTML = `

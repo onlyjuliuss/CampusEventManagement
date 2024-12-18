@@ -52,7 +52,7 @@
                 initialView: 'dayGridMonth',
                 events: function(info, successCallback, failureCallback) {
                     // Fetch events from your API
-                    fetch('http://localhost:5000/api/events', {
+                    fetch('https://campuseventmanagement-backend.onrender.com/api/events', {
                         headers: {
                             'Authorization': `Bearer ${user.token}`
                         }
