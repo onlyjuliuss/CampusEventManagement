@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function fetchEvents() {
     try {
-        const response = await fetch('http://localhost:5000/api/events');
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/events');
         const events = await response.json();
         
         return events.map(event => ({

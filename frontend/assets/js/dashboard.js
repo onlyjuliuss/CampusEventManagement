@@ -1,7 +1,7 @@
 // Load events
 async function loadEvents() {
     try {
-        const response = await fetch('http://localhost:5000/api/events', {
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/events', {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
@@ -34,7 +34,7 @@ function displayEvents(events) {
         const eventCard = document.createElement('div');
         eventCard.className = 'event-card';
         const imageUrl = event.image.startsWith('/') 
-            ? `http://localhost:5000${event.image}`
+            ? `https://campuseventmanagement-backend.onrender.com${event.image}`
             : event.image;
             
         eventCard.innerHTML = `
@@ -70,7 +70,7 @@ async function loadProfile() {
     document.getElementById('profileEmail').textContent = user.email;
 
     try {
-        const response = await fetch('http://localhost:5000/api/users/events', {
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/users/events', {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
@@ -85,7 +85,7 @@ async function loadProfile() {
 // Event actions
 async function rsvpEvent(eventId) {
     try {
-        const response = await fetch(`http://localhost:5000/api/events/${eventId}/rsvp`, {
+        const response = await fetch(`https://campuseventmanagement-backend.onrender.com/api/events/${eventId}/rsvp`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -107,7 +107,7 @@ async function rsvpEvent(eventId) {
 async function deleteEvent(eventId) {
     if (confirm('Are you sure you want to delete this event?')) {
         try {
-            const response = await fetch(`http://localhost:5000/api/events/${eventId}`, {
+            const response = await fetch(`https://campuseventmanagement-backend.onrender.com/api/events/${eventId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${user.token}`
@@ -142,7 +142,7 @@ function displayRegisteredEvents(events) {
         const eventCard = document.createElement('div');
         eventCard.className = 'event-card';
         const imageUrl = event.image.startsWith('/') 
-            ? `http://localhost:5000${event.image}`
+            ? `https://campuseventmanagement-backend.onrender.com${event.image}`
             : event.image;
 
         eventCard.innerHTML = `
@@ -164,7 +164,7 @@ function displayRegisteredEvents(events) {
 // Add this function to dashboard.js
 async function cancelRSVP(eventId) {
     try {
-        const response = await fetch(`http://localhost:5000/api/events/${eventId}/rsvp`, {
+        const response = await fetch(`https://campuseventmanagement-backend.onrender.com/api/events/${eventId}/rsvp`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`

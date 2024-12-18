@@ -44,7 +44,7 @@ async function loadProfile() {
     
     // Fetch user's RSVP'd events
     try {
-        const response = await fetch('http://localhost:5000/api/events', {
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/events', {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
@@ -69,7 +69,7 @@ document.getElementById('userWelcome').textContent = `Welcome, ${user.username}!
 // Fetch and display events
 async function fetchEvents() {
     try {
-        const response = await fetch('http://localhost:5000/api/events', {
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/events', {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
@@ -116,7 +116,7 @@ function displayEvents(events) {
 // RSVP for an event
 async function rsvpEvent(eventId) {
     try {
-        const response = await fetch(`http://localhost:5000/api/events/${eventId}/rsvp`, {
+        const response = await fetch(`https://campuseventmanagement-backend.onrender.com/api/events/${eventId}/rsvp`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -138,7 +138,7 @@ async function rsvpEvent(eventId) {
 // Cancel RSVP for an event
 async function cancelRSVP(eventId) {
     try {
-        const response = await fetch(`http://localhost:5000/api/events/${eventId}/rsvp`, {
+        const response = await fetch(`https://campuseventmanagement-backend.onrender.com/api/events/${eventId}/rsvp`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -171,7 +171,7 @@ async function deleteEvent(eventId) {
     if (!confirm('Are you sure you want to delete this event?')) return;
 
     try {
-        const response = await fetch(`http://localhost:5000/api/events/${eventId}`, {
+        const response = await fetch(`https://campuseventmanagement-backend.onrender.com/api/events/${eventId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`

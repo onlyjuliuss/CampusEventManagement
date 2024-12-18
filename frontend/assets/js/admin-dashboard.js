@@ -47,7 +47,7 @@ function showView(viewName) {
 // Fetch and display events
 async function fetchEvents() {
     try {
-        const response = await fetch('http://localhost:5000/api/events', {
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/events', {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
@@ -86,7 +86,7 @@ function displayEvents(events) {
 // Calendar view
 async function updateCalendar() {
     try {
-        const response = await fetch('http://localhost:5000/api/events', {
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/events', {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
@@ -154,7 +154,7 @@ async function loadAdminProfile() {
     
     try {
         // Fetch all events
-        const response = await fetch('http://localhost:5000/api/events', {
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/events', {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
@@ -209,7 +209,7 @@ async function loadAdminProfile() {
 // Add RSVP functionality
 async function cancelRSVP(eventId) {
     try {
-        const response = await fetch(`http://localhost:5000/api/events/${eventId}/rsvp`, {
+        const response = await fetch(`https://campuseventmanagement-backend.onrender.com/api/events/${eventId}/rsvp`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -233,7 +233,7 @@ async function deleteEvent(eventId) {
     if (!confirm('Are you sure you want to delete this event?')) return;
     
     try {
-        const response = await fetch(`http://localhost:5000/api/events/${eventId}`, {
+        const response = await fetch(`https://campuseventmanagement-backend.onrender.com/api/events/${eventId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`

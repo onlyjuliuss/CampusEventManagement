@@ -39,7 +39,7 @@ document.getElementById('createEventForm').addEventListener('submit', async (e) 
     formData.append('image', document.getElementById('image').files[0]);
 
     try {
-        const response = await fetch('http://localhost:5000/api/events', {
+        const response = await fetch('https://campuseventmanagement-backend.onrender.com/api/events', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${user.token}`
