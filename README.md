@@ -5,7 +5,7 @@ RSvip Hub is a campus event web application where students and lecturers can vie
 
 
 Deployment Link  
-[**Live Demo on Render**]([[https://your-deployment-link.vercel.app](https://campuseventmanagement-frontend.onrender.com)](https://campuseventmanagement-frontend.onrender.com))  
+[**Live Demo on Render**](https://campuseventmanagement-frontend.onrender.com)  
 
 
 Login Details  
