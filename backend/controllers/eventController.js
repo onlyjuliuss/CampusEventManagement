@@ -47,9 +47,9 @@ export const createEvent = async (req, res) => {
         const { title, description, date, time, location, capacity, eventType } = req.body;
         console.log(`title: ${title} || description: ${description} || date: ${date} || time:${time} || location: ${location} || capacity: ${capacity} || eventType: ${eventType}}`)
 
-        if(!title||!description || !date|| time || !location || !capacity || !eventType){
+        if(!title||!description || !date|| !time || !location || !capacity || !eventType){
             console.log("Missing informations")
-            return res.status(400).json({ message: error.message });
+            return res.status(400).json({ message: "Missing informations" });
         }
         const event = await Event.create({
             title,
