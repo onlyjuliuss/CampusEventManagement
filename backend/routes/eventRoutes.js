@@ -7,7 +7,6 @@ import {
     deleteEvent,
     rsvpEvent,
     cancelRSVP,
-    upload
 } from '../controllers/eventController.js';
 
 const router = express.Router();
