@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.route('/')
     .get(getEvents)
-    .post(protect, upload, createEvent);
+    .post(protect, createEvent);
 
 router.route('/:id')
     .put(protect, updateEvent)
