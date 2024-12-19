@@ -1,7 +1,7 @@
 import Event from '../models/Event.js';
 import User from '../models/User.js';
-import multer from 'multer';
-import path from 'path';
+// import multer from 'multer';
+// import path from 'path';
 
 // Configure multer for image upload
 // const storage = multer.diskStorage({
@@ -45,7 +45,12 @@ export const getEvents = async (req, res) => {
 export const createEvent = async (req, res) => {
     try {
         const { title, description, date, time, location, capacity, eventType } = req.body;
-        
+        console.log(`title: ${title} || description: ${description} || date: ${date} || time:${time} || location: ${location} || capacity: ${capacity} || eventType: ${eventType}}`)
+
+        if(!title||!description || !date|| time || !location || !capacity || !eventType){
+            console.log("Missing informations")
+            return res.status(400).json({ message: error.message });
+        }
         const event = await Event.create({
             title,
             description,
