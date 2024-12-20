@@ -74,11 +74,11 @@
                 </select>
             </div>
 
-            <!-- <div class="form-group">
+            <div class="form-group">
                 <label for="image">Event Image</label>
                 <input type="file" id="image" accept="image/*" required>
                 <div id="imagePreview" class="image-preview"></div>
-            </div> -->
+            </div>
 
             <button type="submit" class="btn-primary">Create Event</button>
         </form>
@@ -94,17 +94,17 @@
         }
 
         // Image preview
-        // document.getElementById('image').addEventListener('change', function(e) {
-        //     const file = e.target.files[0];
-        //     const preview = document.getElementById('imagePreview');
-        //     if (file) {
-        //         const reader = new FileReader();
-        //         reader.onload = function(e) {
-        //             preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
-        //         }
-        //         reader.readAsDataURL(file);
-        //     }
-        // });
+        document.getElementById('image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
 
         // Form submission
         document.getElementById('createEventForm').addEventListener('submit', async (e) => {
@@ -122,10 +122,10 @@
                 formData.append('eventType', document.getElementById('eventType').value);
                 
                 // Get the image file
-                // const imageFile = document.getElementById('image').files[0];
-                // if (imageFile) {
-                //     formData.append('image', imageFile);
-                // }
+                const imageFile = document.getElementById('image').files[0];
+                if (imageFile) {
+                    formData.append('image', imageFile);
+                }
 
                 console.log('Sending event data...'); // Debug log
                 console.log("Data",formData)

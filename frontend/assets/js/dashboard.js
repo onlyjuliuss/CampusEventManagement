@@ -30,13 +30,17 @@ function displayEvents(events) {
         return;
     }
 
-    events.forEach(event => {
+    events.forEach((event, index) => {
+     if (index === 0) {
         const eventCard = document.createElement('div');
         eventCard.className = 'event-card';
         const imageUrl = event.image.startsWith('/') 
-            ? `https://campuseventmanagement-backend.onrender.com${event.image}`
+            ? `..${event.image}`
             : event.image;
+
+    // src=../uploads/img.png
             
+        console.log(event.toString())
         eventCard.innerHTML = `
             <img src="${imageUrl}" 
                 alt="${event.title}" 
@@ -61,6 +65,7 @@ function displayEvents(events) {
             `}
         `;
         eventsList.appendChild(eventCard);
+     }
     });
 }
 
@@ -141,15 +146,8 @@ function displayRegisteredEvents(events) {
     events.forEach(event => {
         const eventCard = document.createElement('div');
         eventCard.className = 'event-card';
-        const imageUrl = event.image.startsWith('/') 
-            ? `https://campuseventmanagement-backend.onrender.com${event.image}`
-            : event.image;
 
         eventCard.innerHTML = `
-            <img src="${imageUrl}" 
-                alt="${event.title}" 
-                class="event-image" 
-                onerror="this.src='../assets/images/default-event.jpg'">
             <h3>${event.title}</h3>
             <p>${event.description}</p>
             <p><strong>Date:</strong> ${new Date(event.date).toLocaleDateString()}</p>
